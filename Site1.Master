@@ -1,0 +1,30 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="WebApplication11.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <p><a href="WebForm1.aspx">webform1 </a></p>
+
+            <p><a href="WebForm2.aspx">webform2 </a></p>
+            <p>Hello in this new page</p>
+
+            <asp:LinkButton ID="LinkButton1" runat="server">out </asp:LinkButton>
+            <br />
+           
+            <asp:LinkButton ID="LinkButton2" runat="server">LinkButton</asp:LinkButton>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <p>Goodbaye</p>
+        </div>
+    </form>
+</body>
+</html>

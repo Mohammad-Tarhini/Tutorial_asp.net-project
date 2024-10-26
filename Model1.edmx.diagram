@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="95fe397c4be04a97a12431a15e30490f" Name="Diagram1">
+        <EntityTypeShape EntityType="companyModel.branch" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="companyModel.branch_supplier" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="companyModel.client" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="companyModel.employee" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="companyModel.work_with" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="companyModel.branch_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="companyModel.branch_supplier_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="companyModel.client_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="companyModel.employee_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="companyModel.work_with_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="companyModel.employee_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="companyModel.work_with_ibfk_1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

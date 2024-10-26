@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="companyModel.Store" Provider="Devart.Data.MySql" ProviderManifestToken="MySQL, 5.5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="branch">
+          <Key>
+            <PropertyRef Name="branch_id" />
+          </Key>
+          <Property Name="branch_id" Type="int" Nullable="false" />
+          <Property Name="branch_name" Type="varchar" MaxLength="40" />
+          <Property Name="mgr_id" Type="int" />
+          <Property Name="mgr_start_date" Type="date" />
+        </EntityType>
+        <EntityType Name="branch_supplier">
+          <Key>
+            <PropertyRef Name="branch_id" />
+            <PropertyRef Name="supplier_name" />
+          </Key>
+          <Property Name="branch_id" Type="int" Nullable="false" />
+          <Property Name="supplier_name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="supply_type" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="branch_id" Type="int" />
+          <Property Name="client_name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="firest_name" Type="varchar" MaxLength="40" />
+          <Property Name="last_name" Type="varchar" MaxLength="40" />
+          <Property Name="birth_day" Type="date" />
+          <Property Name="sex" Type="varchar" MaxLength="1" />
+          <Property Name="salary" Type="int" />
+          <Property Name="super_id" Type="int" />
+          <Property Name="branch_id" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Catalog1.company.user' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="passward" />
+            <PropertyRef Name="address" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="passward" Type="int" Nullable="false" />
+          <Property Name="address" Type="int" Nullable="false" />
+          <Property Name="phone number" Type="int" />
+        </EntityType>
+        <EntityType Name="work_with">
+          <Key>
+            <PropertyRef Name="emp_id" />
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="total_sale" Type="int" />
+        </EntityType>
+        <Association Name="branch_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="branch" Type="Self.branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="branch">
+              <PropertyRef Name="mgr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="branch_supplier_ibfk_1">
+          <End Role="branch" Type="Self.branch" Multiplicity="1" />
+          <End Role="branch_supplier" Type="Self.branch_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="branch_id" />
+            </Principal>
+            <Dependent Role="branch_supplier">
+              <PropertyRef Name="branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="client_ibfk_1">
+          <End Role="branch" Type="Self.branch" Multiplicity="0..1" />
+          <End Role="client" Type="Self.client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="branch_id" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_ibfk_1">
+          <End Role="branch" Type="Self.branch" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="branch_id" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_ibfk_2">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="employee1" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="employee1">
+              <PropertyRef Name="super_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="work_with_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="work_with" Type="Self.work_with" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="work_with">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="work_with_ibfk_2">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="work_with" Type="Self.work_with" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="work_with">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="companyModelStoreContainer">
+          <EntitySet Name="branch" EntityType="Self.branch" Schema="company" store:Type="Tables" />
+          <EntitySet Name="branch_supplier" EntityType="Self.branch_supplier" Schema="company" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="company" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="company" store:Type="Tables" />
+          <EntitySet Name="work_with" EntityType="Self.work_with" Schema="company" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" store:Type="Tables" store:Schema="company">
+            <DefiningQuery>SELECT 
+user.name,
+user.passward,
+user.address,
+user.`phone number`
+FROM company.user AS user</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="branch_ibfk_1" Association="Self.branch_ibfk_1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="branch" EntitySet="branch" />
+          </AssociationSet>
+          <AssociationSet Name="branch_supplier_ibfk_1" Association="Self.branch_supplier_ibfk_1">
+            <End Role="branch" EntitySet="branch" />
+            <End Role="branch_supplier" EntitySet="branch_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="client_ibfk_1" Association="Self.client_ibfk_1">
+            <End Role="branch" EntitySet="branch" />
+            <End Role="client" EntitySet="client" />
+          </AssociationSet>
+          <AssociationSet Name="employee_ibfk_1" Association="Self.employee_ibfk_1">
+            <End Role="branch" EntitySet="branch" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="employee_ibfk_2" Association="Self.employee_ibfk_2">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee1" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="work_with_ibfk_1" Association="Self.work_with_ibfk_1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="work_with" EntitySet="work_with" />
+          </AssociationSet>
+          <AssociationSet Name="work_with_ibfk_2" Association="Self.work_with_ibfk_2">
+            <End Role="client" EntitySet="client" />
+            <End Role="work_with" EntitySet="work_with" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="companyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="branch">
+          <Key>
+            <PropertyRef Name="branch_id" />
+          </Key>
+          <Property Name="branch_id" Type="Int32" Nullable="false" />
+          <Property Name="branch_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="mgr_id" Type="Int32" />
+          <Property Name="mgr_start_date" Type="DateTime" />
+          <NavigationProperty Name="employee" Relationship="Self.branch_ibfk_1" FromRole="branch" ToRole="employee" />
+          <NavigationProperty Name="branch_supplier" Relationship="Self.branch_supplier_ibfk_1" FromRole="branch" ToRole="branch_supplier" />
+          <NavigationProperty Name="clients" Relationship="Self.client_ibfk_1" FromRole="branch" ToRole="client" />
+          <NavigationProperty Name="employees" Relationship="Self.employee_ibfk_1" FromRole="branch" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="branch_supplier">
+          <Key>
+            <PropertyRef Name="branch_id" />
+            <PropertyRef Name="supplier_name" />
+          </Key>
+          <Property Name="branch_id" Type="Int32" Nullable="false" />
+          <Property Name="supplier_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="supply_type" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="branch" Relationship="Self.branch_supplier_ibfk_1" FromRole="branch_supplier" ToRole="branch" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="branch_id" Type="Int32" />
+          <Property Name="client_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="branch" Relationship="Self.client_ibfk_1" FromRole="client" ToRole="branch" />
+          <NavigationProperty Name="work_with" Relationship="Self.work_with_ibfk_2" FromRole="client" ToRole="work_with" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <Property Name="firest_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="birth_day" Type="DateTime" />
+          <Property Name="sex" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="salary" Type="Int32" />
+          <Property Name="super_id" Type="Int32" />
+          <Property Name="branch_id" Type="Int32" />
+          <NavigationProperty Name="branches" Relationship="Self.branch_ibfk_1" FromRole="employee" ToRole="branch" />
+          <NavigationProperty Name="branch" Relationship="Self.employee_ibfk_1" FromRole="employee" ToRole="branch" />
+          <NavigationProperty Name="employee1" Relationship="Self.employee_ibfk_2" FromRole="employee" ToRole="employee1" />
+          <NavigationProperty Name="employee2" Relationship="Self.employee_ibfk_2" FromRole="employee1" ToRole="employee" />
+          <NavigationProperty Name="work_with" Relationship="Self.work_with_ibfk_1" FromRole="employee" ToRole="work_with" />
+        </EntityType>
+        <EntityType Name="work_with">
+          <Key>
+            <PropertyRef Name="emp_id" />
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="total_sale" Type="Int32" />
+          <NavigationProperty Name="client" Relationship="Self.work_with_ibfk_2" FromRole="work_with" ToRole="client" />
+          <NavigationProperty Name="employee" Relationship="Self.work_with_ibfk_1" FromRole="work_with" ToRole="employee" />
+        </EntityType>
+        <Association Name="branch_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="branch" Type="Self.branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="branch">
+              <PropertyRef Name="mgr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="branch_supplier_ibfk_1">
+          <End Role="branch" Type="Self.branch" Multiplicity="1" />
+          <End Role="branch_supplier" Type="Self.branch_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="branch_id" />
+            </Principal>
+            <Dependent Role="branch_supplier">
+              <PropertyRef Name="branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="client_ibfk_1">
+          <End Role="branch" Type="Self.branch" Multiplicity="0..1" />
+          <End Role="client" Type="Self.client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="branch_id" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_ibfk_1">
+          <End Role="branch" Type="Self.branch" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="branch_id" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="work_with_ibfk_2">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="work_with" Type="Self.work_with" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="work_with">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_ibfk_2">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="employee1" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="employee1">
+              <PropertyRef Name="super_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="work_with_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="work_with" Type="Self.work_with" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="work_with">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="companyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="branches" EntityType="Self.branch" />
+          <EntitySet Name="branch_supplier" EntityType="Self.branch_supplier" />
+          <EntitySet Name="clients" EntityType="Self.client" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="work_with" EntityType="Self.work_with" />
+          <AssociationSet Name="branch_ibfk_1" Association="Self.branch_ibfk_1">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="branch" EntitySet="branches" />
+          </AssociationSet>
+          <AssociationSet Name="branch_supplier_ibfk_1" Association="Self.branch_supplier_ibfk_1">
+            <End Role="branch" EntitySet="branches" />
+            <End Role="branch_supplier" EntitySet="branch_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="client_ibfk_1" Association="Self.client_ibfk_1">
+            <End Role="branch" EntitySet="branches" />
+            <End Role="client" EntitySet="clients" />
+          </AssociationSet>
+          <AssociationSet Name="employee_ibfk_1" Association="Self.employee_ibfk_1">
+            <End Role="branch" EntitySet="branches" />
+            <End Role="employee" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="work_with_ibfk_2" Association="Self.work_with_ibfk_2">
+            <End Role="client" EntitySet="clients" />
+            <End Role="work_with" EntitySet="work_with" />
+          </AssociationSet>
+          <AssociationSet Name="employee_ibfk_2" Association="Self.employee_ibfk_2">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="employee1" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="work_with_ibfk_1" Association="Self.work_with_ibfk_1">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="work_with" EntitySet="work_with" />
+          </AssociationSet>
+          <EntitySet Name="users" EntityType="companyModel.user" />
+        </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="passward" />
+            <PropertyRef Name="address" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="passward" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="Int32" Nullable="false" />
+          <Property Name="phone_number" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="companyModelStoreContainer" CdmEntityContainer="companyEntities">
+          <EntitySetMapping Name="branches">
+            <EntityTypeMapping TypeName="companyModel.branch">
+              <MappingFragment StoreEntitySet="branch">
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+                <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+                <ScalarProperty Name="mgr_id" ColumnName="mgr_id" />
+                <ScalarProperty Name="mgr_start_date" ColumnName="mgr_start_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="branch_supplier">
+            <EntityTypeMapping TypeName="companyModel.branch_supplier">
+              <MappingFragment StoreEntitySet="branch_supplier">
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="supply_type" ColumnName="supply_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="companyModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+                <ScalarProperty Name="client_name" ColumnName="client_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="companyModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="firest_name" ColumnName="firest_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="birth_day" ColumnName="birth_day" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="super_id" ColumnName="super_id" />
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="work_with">
+            <EntityTypeMapping TypeName="companyModel.work_with">
+              <MappingFragment StoreEntitySet="work_with">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="total_sale" ColumnName="total_sale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="companyModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="phone_number" ColumnName="phone number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="passward" ColumnName="passward" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
